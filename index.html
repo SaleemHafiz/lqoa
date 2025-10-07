@@ -4,18 +4,22 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Learn Quran Online Academy</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 :root {
-  --teal: #008b8b;
-  --gold: #e7b15c;
-  --bg: #f9fbfc;
-  --dark: #0d1c1c;
-  --text: #1b1b1b;
+  --teal: #028a8a;
+  --gold: #e6b656;
+  --bg: #fdfdfd;
+  --dark: #052626;
+  --text: #1a1a1a;
 }
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:80px;}
-body{
+* {margin:0;padding:0;box-sizing:border-box;}
+html {scroll-behavior:smooth;scroll-padding-top:80px;}
+body {
   font-family:"Poppins",sans-serif;
   background:var(--bg);
   color:var(--text);
@@ -23,182 +27,219 @@ body{
 }
 
 /* ---------- HEADER ---------- */
-header{
+header {
   position:fixed;top:0;left:0;width:100%;
-  background:rgba(255,255,255,0.97);
+  background:rgba(255,255,255,0.98);
   display:flex;align-items:center;justify-content:space-between;
-  padding:1rem 6%;
-  box-shadow:0 3px 15px rgba(0,0,0,0.05);
+  padding:0.8rem 6%;
+  box-shadow:0 3px 15px rgba(0,0,0,0.08);
   z-index:1000;
-  transition:all 0.4s ease;
+  transition:0.4s ease;
 }
-header.scrolled{padding:0.6rem 6%;background:rgba(255,255,255,0.9);}
-header h1{
+header.scrolled {padding:0.4rem 6%;background:rgba(255,255,255,0.95);}
+.logo {
+  display:flex;align-items:center;gap:0.6rem;
+}
+.logo img {width:40px;height:40px;border-radius:50%;}
+.logo span {
   font-family:"Playfair Display",serif;
   color:var(--teal);
-  font-size:1.6rem;
+  font-size:1.4rem;font-weight:700;
 }
-nav a{
-  color:var(--dark);text-decoration:none;
-  margin-left:1.5rem;font-weight:600;position:relative;
+nav {
+  display:flex;align-items:center;
 }
-nav a::after{
+nav a {
+  color:var(--dark);
+  text-decoration:none;
+  margin-left:1.5rem;
+  font-weight:600;
+  position:relative;
+  transition:color 0.3s;
+}
+nav a:hover {color:var(--teal);}
+nav a::after {
   content:"";position:absolute;left:0;bottom:-4px;width:0;height:2px;
   background:var(--gold);transition:width 0.3s;
 }
-nav a:hover::after{width:100%;}
+nav a:hover::after {width:100%;}
+.menu-toggle {
+  display:none;
+  font-size:1.6rem;
+  cursor:pointer;
+  color:var(--teal);
+}
 @media(max-width:768px){
-  nav{display:none;}
-  header{justify-content:center;}
+  nav {
+    display:none;
+    flex-direction:column;
+    position:absolute;
+    top:70px;right:5%;
+    background:#fff;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    border-radius:10px;
+    overflow:hidden;
+    z-index:999;
+  }
+  nav.show {display:flex;}
+  nav a {
+    margin:0;padding:1rem 1.5rem;width:100%;
+    border-bottom:1px solid #f3f3f3;
+  }
+  .menu-toggle {display:block;}
 }
 
 /* ---------- HERO ---------- */
-.hero{
+.hero {
   position:relative;
   height:100vh;
   background:url('https://images.unsplash.com/photo-1600508774634-7a249bca9b4c?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
   display:flex;align-items:center;justify-content:center;
   text-align:center;color:#fff;
 }
-.hero::after{
-  content:"";position:absolute;inset:0;background:rgba(0,0,0,0.5);
+.hero::after {
+  content:"";position:absolute;inset:0;background:rgba(0,0,0,0.55);
 }
-.hero-content{
+.hero-content {
   position:relative;z-index:2;
   max-width:800px;padding:0 1rem;
   animation:fadeInUp 1.4s ease forwards;
 }
-.hero h2{
+.hero h2 {
   font-family:"Playfair Display",serif;
   font-size:3rem;line-height:1.3;margin-bottom:1rem;
 }
-.hero p{
+.hero p {
   font-size:1.2rem;line-height:1.7;margin-bottom:2rem;
-  color:#f1f1f1;
+  color:#f2f2f2;
 }
-.btn{
+.btn {
   background:var(--gold);border:none;color:#fff;
   padding:0.9rem 2rem;border-radius:40px;font-size:1.1rem;
   cursor:pointer;transition:0.3s;
 }
-.btn:hover{background:var(--teal);transform:translateY(-3px);}
+.btn:hover {background:var(--teal);transform:translateY(-3px);}
 
 /* ---------- SECTIONS ---------- */
-section{padding:4rem 7%;}
-.section-title{
+section {padding:4rem 7%;}
+.section-title {
   text-align:center;font-family:"Playfair Display",serif;
   color:var(--teal);font-size:2.3rem;margin-bottom:2rem;
 }
 
 /* ---------- FOCUS ---------- */
-.focus-grid{
+.focus-grid {
   display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:2rem;
 }
-.focus-card{
+.focus-card {
   background:#fff;border-radius:15px;
   box-shadow:0 5px 15px rgba(0,0,0,0.06);
   padding:1.5rem;text-align:center;
   transition:0.4s;
 }
-.focus-card:hover{transform:translateY(-6px);box-shadow:0 8px 20px rgba(0,0,0,0.1);}
-.focus-card img{width:100%;border-radius:12px;margin-bottom:1rem;}
-.focus-card h3{color:var(--teal);margin-bottom:0.5rem;}
+.focus-card:hover {transform:translateY(-6px);box-shadow:0 8px 20px rgba(0,0,0,0.1);}
+.focus-card img {width:100%;border-radius:12px;margin-bottom:1rem;}
+.focus-card h3 {color:var(--teal);margin-bottom:0.5rem;}
+.focus-card i {font-size:2.2rem;color:var(--gold);margin-bottom:0.8rem;}
 
 /* ---------- WHY US ---------- */
-.whyus-content{display:flex;flex-wrap:wrap;align-items:center;gap:2.5rem;}
-.whyus-img img{width:100%;border-radius:15px;}
-.whyus-text{flex:1;}
-.whyus-text h2{
+.whyus-content {
+  display:flex;flex-wrap:wrap;align-items:center;gap:2.5rem;
+}
+.whyus-img img {width:100%;border-radius:15px;}
+.whyus-text {flex:1;}
+.whyus-text h2 {
   font-family:"Playfair Display",serif;color:var(--teal);
   margin-bottom:1rem;font-size:2rem;
 }
-.whyus-text ul{list-style:none;line-height:2;}
-.whyus-text li{padding-left:1.2rem;position:relative;}
-.whyus-text li::before{
+.whyus-text ul {list-style:none;line-height:2;}
+.whyus-text li {padding-left:1.2rem;position:relative;}
+.whyus-text li::before {
   content:"✔";color:var(--gold);position:absolute;left:0;
 }
 @media(max-width:768px){.whyus-content{flex-direction:column;text-align:center;}}
 
 /* ---------- PLANS ---------- */
-.tab-buttons{text-align:center;margin-bottom:1rem;}
-.tab-btn{
+.tab-buttons {text-align:center;margin-bottom:1rem;}
+.tab-btn {
   background:none;border:2px solid var(--teal);color:var(--teal);
   padding:0.6rem 1.2rem;margin:0 0.4rem;border-radius:25px;cursor:pointer;
   transition:0.3s;font-weight:600;
 }
-.tab-btn.active,.tab-btn:hover{background:var(--teal);color:#fff;}
-.plan-table{
+.tab-btn.active,.tab-btn:hover {background:var(--teal);color:#fff;}
+.plan-table {
   width:100%;max-width:850px;margin:auto;
   border-collapse:collapse;box-shadow:0 4px 12px rgba(0,0,0,0.05);
 }
-.plan-table th,.plan-table td{
+.plan-table th,.plan-table td {
   border:1px solid #eee;padding:0.9rem;text-align:center;
 }
-.plan-table th{background:var(--teal);color:#fff;}
-.plan-table tr:hover{background:#f5fdfd;}
-.plan-table .highlight{background:var(--gold);color:#fff;font-weight:700;}
+.plan-table th {background:var(--teal);color:#fff;}
+.plan-table tr:hover {background:#f5fdfd;}
+.plan-table .highlight {background:var(--gold);color:#fff;font-weight:700;}
+.tab-content {display:none;opacity:0;transition:opacity 0.4s ease;}
+.tab-content.active {display:block;opacity:1;}
 
 /* ---------- ENROLL ---------- */
-.enroll{
+.enroll {
   background:#f9fdfd;padding:3rem 1rem;border-radius:10px;
 }
-.enroll-sub{text-align:center;margin-bottom:2rem;color:#555;}
-.enroll-form{
+.enroll-sub {text-align:center;margin-bottom:2rem;color:#555;}
+.enroll-form {
   display:grid;gap:1rem;max-width:600px;margin:auto;
 }
-.enroll-form input,.enroll-form select,.enroll-form textarea{
+.enroll-form input,.enroll-form select,.enroll-form textarea {
   padding:0.9rem;border:1px solid #ccc;border-radius:8px;
   font-size:1rem;transition:0.3s;
 }
-.enroll-form input:focus,.enroll-form select:focus,.enroll-form textarea:focus{
+.enroll-form input:focus,.enroll-form select:focus,.enroll-form textarea:focus {
   border-color:var(--teal);outline:none;
 }
-.enroll-form button{
+.enroll-form button {
   background:var(--teal);color:#fff;border:none;
   padding:1rem;border-radius:8px;font-size:1.1rem;
   cursor:pointer;transition:0.3s;
 }
-.enroll-form button:hover{background:var(--gold);}
+.enroll-form button:hover {background:var(--gold);}
 
 /* ---------- CONTACT ---------- */
-#contact{text-align:center;padding:2rem 1rem;}
-#contact a{color:var(--teal);text-decoration:none;}
-#contact a:hover{text-decoration:underline;}
-footer{
+#contact {text-align:center;padding:2rem 1rem;}
+#contact a {color:var(--teal);text-decoration:none;font-weight:600;}
+#contact a:hover {text-decoration:underline;}
+footer {
   text-align:center;padding:1rem;background:#003c3c;
   color:#fff;font-size:0.9rem;margin-top:2rem;
 }
 
 /* ---------- ANIMATIONS ---------- */
-@keyframes fadeInUp{
-  from{opacity:0;transform:translateY(50px);}
-  to{opacity:1;transform:none;}
+@keyframes fadeInUp {
+  from {opacity:0;transform:translateY(50px);}
+  to {opacity:1;transform:none;}
 }
-.slide-up,.slide-left,.slide-right{opacity:0;transition:all 0.8s ease-out;}
-.slide-up{transform:translateY(40px);}
-.slide-left{transform:translateX(-40px);}
-.slide-right{transform:translateX(40px);}
-.visible{opacity:1;transform:none;}
-.tab-content {
-  display: none;
+.slide-up,.slide-left,.slide-right {
+  opacity:0;transition:all 0.8s ease-out;
 }
-.tab-content.active {
-  display: block;
-}
-
+.slide-up {transform:translateY(40px);}
+.slide-left {transform:translateX(-40px);}
+.slide-right {transform:translateX(40px);}
+.visible {opacity:1;transform:none;}
 </style>
 </head>
 
 <body>
 <header>
-  <h1>Learn Quran Online Academy</h1>
+  <div class="logo">
+    <img src="logo.png" alt="Learn Quran Online Logo">
+    <span>Learn Quran Online</span>
+  </div>
+  <i class="fas fa-bars menu-toggle"></i>
   <nav>
-    <a href="#focus">Focus</a>
-    <a href="#whyus">Why Us</a>
-    <a href="#plans">Plans</a>
-    <a href="#enroll">Enroll</a>
-    <a href="#contact">Contact</a>
+    <a href="#focus"><i class="fas fa-book-open"></i> Focus</a>
+    <a href="#whyus"><i class="fas fa-star"></i> Why Us</a>
+    <a href="#plans"><i class="fas fa-coins"></i> Plans</a>
+    <a href="#enroll"><i class="fas fa-user-plus"></i> Enroll</a>
+    <a href="#contact"><i class="fas fa-phone"></i> Contact</a>
   </nav>
 </header>
 
@@ -214,17 +255,17 @@ footer{
   <h2 class="section-title">Our Special Focus</h2>
   <div class="focus-grid">
     <div class="focus-card slide-up">
-      <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=600&q=60" alt="">
+      <i class="fas fa-mosque"></i>
       <h3>Tajweed Rules</h3>
       <p>Master accurate pronunciation with expert Tajweed guidance.</p>
     </div>
     <div class="focus-card slide-up">
-      <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=600&q=60" alt="">
+      <i class="fas fa-clock"></i>
       <h3>Flexible Schedules</h3>
       <p>Choose convenient timings and learn comfortably from home via Zoom.</p>
     </div>
     <div class="focus-card slide-up">
-      <img src="https://images.unsplash.com/photo-1618354691373-73c01592b51a?auto=format&fit=crop&w=600&q=60" alt="">
+      <i class="fas fa-praying-hands"></i>
       <h3>Namaz & Daily Duas</h3>
       <p>Memorize essential duas and strengthen daily connection with Allah.</p>
     </div>
@@ -321,8 +362,8 @@ footer{
 <section id="contact">
   <h2 class="section-title">Contact Us</h2>
   <div class="contact-info">
-    <p>📞 <a href="https://wa.me/61420808755?text=Salam%20I%20want%20to%20learn%20Quran%20Online" target="_blank">+61 420 808 755</a></p>
-    <p>📧 <a href="mailto:saleemhafizj@gmail.com">saleemhafizj@gmail.com</a></p>
+    <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/61420808755?text=Salam%20I%20want%20to%20learn%20Quran%20Online" target="_blank">+61 420 808 755</a></p>
+    <p><i class="fas fa-envelope"></i> <a href="mailto:saleemhafizj@gmail.com">saleemhafizj@gmail.com</a></p>
   </div>
 </section>
 
@@ -333,8 +374,12 @@ footer{
 <script>
 /* Animate on scroll */
 const revealEls=document.querySelectorAll(".slide-up,.slide-left,.slide-right");
-function reveal(){const trigger=window.innerHeight*0.85;
-revealEls.forEach(el=>{if(el.getBoundingClientRect().top<trigger)el.classList.add("visible");});}
+function reveal(){
+  const trigger=window.innerHeight*0.85;
+  revealEls.forEach(el=>{
+    if(el.getBoundingClientRect().top<trigger)el.classList.add("visible");
+  });
+}
 window.addEventListener("scroll",reveal);reveal();
 
 /* Header shrink */
@@ -352,6 +397,11 @@ document.querySelectorAll(".tab-btn").forEach(tab=>{
     document.getElementById(tab.dataset.tab).classList.add("active");
   });
 });
+
+/* Mobile menu */
+const menuBtn=document.querySelector('.menu-toggle');
+const nav=document.querySelector('nav');
+menuBtn.addEventListener('click',()=>nav.classList.toggle('show'));
 
 /* WhatsApp Enroll */
 document.getElementById("enrollForm").addEventListener("submit",e=>{
