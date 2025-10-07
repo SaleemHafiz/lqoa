@@ -755,7 +755,7 @@
         });
       });
 
-      /* Mobile menu toggle & close on outside click */
+      /* Mobile menu toggle */
       const menuBtn = document.querySelector(".menu-toggle");
       const nav = document.querySelector("nav");
 
@@ -763,33 +763,22 @@
         e.stopPropagation();
         nav.classList.toggle("show");
       });
-
       document.addEventListener("click", (e) => {
         if (!nav.contains(e.target) && !menuBtn.contains(e.target)) {
           nav.classList.remove("show");
         }
       });
 
-      /* Close mobile menu when clicking outside */
-      document.addEventListener("click", (e) => {
-        if (!nav.contains(e.target) && !menuBtn.contains(e.target)) {
-          nav.classList.remove("show");
-        }
-      });
+      /* Helpers */
+      function buildMessage() {
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const country = document.getElementById("country").value;
+        const plan = document.getElementById("plan").value;
+        const msg = document.getElementById("message").value.trim();
 
-      /* WhatsApp Enroll */
-      const enrollForm = document.getElementById("enrollForm");
-      enrollForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const name = document.getElementById("name").value.trim(),
-          email = document.getElementById("email").value.trim(),
-          phone = document.getElementById("phone").value.trim(),
-          country = document.getElementById("country").value,
-          plan = document.getElementById("plan").value,
-          msg = document.getElementById("message").value.trim();
-
-        const finalMessage =
-          encodeURIComponent(`Salam! I would like to enroll in Learn Quran Online Academy.
+        return encodeURIComponent(`Salam! I would like to enroll in Learn Quran Online Academy.
 
 👤 Name: ${name}
 📧 Email: ${email}
@@ -797,29 +786,33 @@
 🌍 Country: ${country}
 📘 Plan: ${plan}
 📝 Message: ${msg || "N/A"}`);
+      }
 
-        const whatsappUrl = `https://wa.me/61420808755?text=${finalMessage}`;
-        const emailUrl = `mailto:saleemhafizj@gmail.com?subject=Enrollment Request - Learn Quran Online&body=${finalMessage}`;
+      function validateForm() {
+        const form = document.getElementById("enrollForm");
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return false;
+        }
+        return true;
+      }
 
-        // Ask user which method to use
-        const method = confirm(
-          "Click OK to send via WhatsApp or Cancel to send via Email"
-        );
-        window.open(method ? whatsappUrl : emailUrl, "_blank");
+      /* WhatsApp Enroll */
+      document.getElementById("whatsappBtn").addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!validateForm()) return;
+        const message = buildMessage();
+        const whatsappUrl = `https://wa.me/61420808755?text=${message}`;
+        window.open(whatsappUrl, "_blank");
       });
 
       /* Email Enroll */
-      document.getElementById("emailBtn").addEventListener("click", () => {
-        const name = document.getElementById("name").value.trim(),
-          email = document.getElementById("email").value.trim(),
-          phone = document.getElementById("phone").value.trim(),
-          country = document.getElementById("country").value,
-          plan = document.getElementById("plan").value,
-          msg = document.getElementById("message").value.trim();
-        const body = `Salam! I would like to enroll in Learn Quran Online Academy.%0D%0A%0D%0A👤 Name: ${name}%0D%0A📧 Email: ${email}%0D%0A📱 WhatsApp: ${phone}%0D%0A🌍 Country: ${country}%0D%0A📘 Plan: ${plan}%0D%0A📝 Message: ${
-          msg || "N/A"
-        }`;
-        window.location.href = `mailto:saleemhafizj@gmail.com?subject=New Enrollment&body=${body}`;
+      document.getElementById("emailBtn").addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!validateForm()) return;
+        const message = buildMessage();
+        const emailUrl = `mailto:saleemhafizj@gmail.com?subject=Enrollment Request - Learn Quran Online&body=${message}`;
+        window.open(emailUrl, "_blank");
       });
     </script>
   </body>
