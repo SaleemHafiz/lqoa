@@ -282,13 +282,16 @@
         background: none;
         border: 2px solid var(--teal);
         color: var(--teal);
-        padding: 0.6rem 1.2rem;
-        margin: 0 0.4rem;
+        padding: 0.5rem 1rem;
+        margin: 0 0.3rem;
         border-radius: 25px;
         cursor: pointer;
         transition: 0.3s;
         font-weight: 600;
+        font-size: 0.95rem;
+        white-space: nowrap;
       }
+
       .tab-btn.active,
       .tab-btn:hover {
         background: var(--teal);
@@ -441,6 +444,16 @@
         max-width: 150px;
         font-size: 0.95rem;
         white-space: nowrap;
+      }
+
+      .enroll-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+      }
+      .enroll-buttons button {
+        flex: 1;
+        max-width: 240px;
       }
     </style>
   </head>
@@ -673,7 +686,12 @@
           rows="4"
           placeholder="Any additional details..."
         ></textarea>
-        <button type="submit">Enroll via WhatsApp</button>
+        <div class="enroll-buttons">
+          <button type="submit" id="whatsappBtn">Enroll via WhatsApp</button>
+          <button type="button" id="emailBtn" style="background: var(--gold)">
+            Enroll via Email
+          </button>
+        </div>
       </form>
     </section>
 
@@ -749,6 +767,13 @@
         }
       });
 
+      /* Close mobile menu when clicking outside */
+      document.addEventListener("click", (e) => {
+        if (!nav.contains(e.target) && !menuBtn.contains(e.target)) {
+          nav.classList.remove("show");
+        }
+      });
+
       /* WhatsApp Enroll */
       const enrollForm = document.getElementById("enrollForm");
       enrollForm.addEventListener("submit", (e) => {
@@ -778,6 +803,20 @@
           "Click OK to send via WhatsApp or Cancel to send via Email"
         );
         window.open(method ? whatsappUrl : emailUrl, "_blank");
+      });
+
+      /* Email Enroll */
+      document.getElementById("emailBtn").addEventListener("click", () => {
+        const name = document.getElementById("name").value.trim(),
+          email = document.getElementById("email").value.trim(),
+          phone = document.getElementById("phone").value.trim(),
+          country = document.getElementById("country").value,
+          plan = document.getElementById("plan").value,
+          msg = document.getElementById("message").value.trim();
+        const body = `Salam! I would like to enroll in Learn Quran Online Academy.%0D%0A%0D%0A👤 Name: ${name}%0D%0A📧 Email: ${email}%0D%0A📱 WhatsApp: ${phone}%0D%0A🌍 Country: ${country}%0D%0A📘 Plan: ${plan}%0D%0A📝 Message: ${
+          msg || "N/A"
+        }`;
+        window.location.href = `mailto:saleemhafizj@gmail.com?subject=New Enrollment&body=${body}`;
       });
     </script>
   </body>
