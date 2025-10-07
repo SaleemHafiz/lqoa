@@ -141,7 +141,7 @@ nav a:hover::after {
   /* Elegant background with dark overlay */
   background: 
     linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
-    url("https://images.pexels.com/photos/7249191/pexels-photo-7249191.jpeg") 
+    url("https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1600&q=80") 
     center/cover no-repeat;
   background-attachment: fixed; /* optional for parallax effect */
 }
@@ -230,46 +230,129 @@ section {
   margin-bottom: 0.8rem;
 }
 
-/* ---------- WHY US ---------- */
-.whyus-content {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 2.5rem;
-}
-.whyus-img img {
-  width: 100%;
-  border-radius: 15px;
-}
-.whyus-text {
-  flex: 1;
-}
-.whyus-text h2 {
-  font-family: "Playfair Display", serif;
-  color: var(--teal);
-  margin-bottom: 1rem;
-  font-size: 2rem;
-}
-.whyus-text ul {
-  list-style: none;
-  line-height: 2;
-}
-.whyus-text li {
-  padding-left: 1.2rem;
+/* ---------- WHY US + FREE TRIAL HERO ---------- */
+#whyus-trial {
   position: relative;
+  color: #fff;
+  padding: 6rem 7%;
+  background: 
+    linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+    url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.whyus-text li::before {
+
+.whyus-trial-content {
+  display: flex;
+  gap: 4rem;
+  max-width: 1200px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+/* ----- Why Us ----- */
+.whyus-left {
+  flex: 1 1 400px;
+}
+.whyus-left h2 {
+  font-family: "Playfair Display", serif; /* Fancy font */
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+.whyus-left ul {
+  list-style: none;
+  padding: 0;
+  line-height: 2;
+  font-family: "Poppins", sans-serif; /* Body text font */
+}
+.whyus-left li {
+  margin-bottom: 0.8rem;
+  position: relative;
+  padding-left: 1.2rem;
+}
+.whyus-left li::before {
   content: "✔";
   color: var(--gold);
   position: absolute;
   left: 0;
+  top: 0;
 }
-@media (max-width: 768px) {
-  .whyus-content {
+
+/* ----- Free Trial Card ----- */
+.trial-right {
+  flex: 1 1 400px;
+}
+.trial-card {
+  background: linear-gradient(135deg, #ffffff, #ffeaaf, #fceabb);
+  background-size: 400% 400%;
+  color: var(--dark);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: gradientShift 8s ease infinite;
+}
+.trial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+}
+.trial-card h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--teal);
+}
+.trial-card p {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+.trial-card .btn {
+  background: var(--gold);
+  color: #fff;
+  padding: 0.8rem 2rem;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: background 0.3s, transform 0.3s;
+}
+.trial-card .btn:hover {
+  background: var(--teal);
+  transform: translateY(-2px);
+}
+
+/* ----- Gradient Animation Keyframes ----- */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ----- Animations ----- */
+.slide-left { transform: translateX(-40px); opacity: 0; transition: all 0.8s ease-out; }
+.slide-right { transform: translateX(40px); opacity: 0; transition: all 0.8s ease-out; }
+.visible { transform: translateX(0); opacity: 1; }
+
+/* ----- Responsive ----- */
+@media (max-width: 992px) {
+  .whyus-trial-content {
     flex-direction: column;
-    text-align: center;
+  }
+  .whyus-left, .trial-right {
+    flex: 1 1 100%;
+  }
+  .whyus-left ul {
+    padding-left: 0;
+  }
+  .whyus-left li::before {
+    left: -1.2rem;
   }
 }
+
+
+
 
 /* ---------- PLANS ---------- */
 .tab-buttons {
