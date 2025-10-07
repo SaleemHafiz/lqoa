@@ -265,6 +265,7 @@ section {
 .whyus-left ul {
   list-style: none;
   padding: 0;
+  margin-left: 28px;
   line-height: 2;
   font-family: "Poppins", sans-serif; /* Body text font */
 }
