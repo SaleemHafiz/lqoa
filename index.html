@@ -721,22 +721,22 @@
       <p>© 2025 Learn Quran Online Academy. All Rights Reserved.</p>
     </footer>
 
-    <script>
-      const enrollForm = document.getElementById("enrollForm");
+<script>
+  const enrollForm = document.getElementById("enrollForm");
 
-      function isMobile() {
-        return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      }
+  function isMobile() {
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  }
 
-      function buildMessage() {
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const phone = document.getElementById("phone").value.trim();
-        const country = document.getElementById("country").value;
-        const plan = document.getElementById("plan").value;
-        const msg = document.getElementById("message").value.trim();
+  function buildMessage() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const country = document.getElementById("country").value;
+    const plan = document.getElementById("plan").value;
+    const msg = document.getElementById("message").value.trim();
 
-        return `Salam! I would like to enroll in Learn Quran Online Academy.
+    return `Salam! I would like to enroll in Learn Quran Online Academy.
 
 👤 Name: ${name}
 📧 Email: ${email}
@@ -744,66 +744,97 @@
 🌍 Country: ${country}
 📘 Plan: ${plan}
 📝 Message: ${msg || "N/A"}`;
-      }
+  }
 
-      /* ✅ WhatsApp Button */
-      document.getElementById("whatsappBtn").addEventListener("click", () => {
-        const phone = "61420808755";
-        const message = encodeURIComponent(buildMessage());
+  /* ✅ Show Toast */
+  function showToast(message, color = "#2ecc71") {
+    const toast = document.createElement("div");
+    toast.innerText = message;
+    toast.style.position = "fixed";
+    toast.style.bottom = "30px";
+    toast.style.left = "50%";
+    toast.style.transform = "translateX(-50%)";
+    toast.style.background = color;
+    toast.style.color = "#fff";
+    toast.style.padding = "12px 20px";
+    toast.style.borderRadius = "6px";
+    toast.style.boxShadow = "0 4px 12px rgba(0,0,0,0.2)";
+    toast.style.fontSize = "16px";
+    toast.style.opacity = "0";
+    toast.style.transition = "opacity 0.4s ease, bottom 0.4s ease";
+    toast.style.zIndex = "9999";
+    document.body.appendChild(toast);
 
-        if (isMobile()) {
-          // Mobile users → open WhatsApp app
-          window.location.href = `https://wa.me/${phone}?text=${message}`;
-        } else {
-          // Desktop: try native app first, fallback to web
-          const appUrl = `whatsapp://send?phone=${phone}&text=${message}`;
-          const webUrl = `https://web.whatsapp.com/send?phone=${phone}&text=${message}`;
-          const timeout = setTimeout(() => {
-            window.open(webUrl, "_blank");
-          }, 800);
-          window.location.href = appUrl;
-          // clear timeout if the app opens successfully
-          window.addEventListener("blur", () => clearTimeout(timeout), {
-            once: true,
-          });
-        }
-      });
+    // show
+    requestAnimationFrame(() => {
+      toast.style.opacity = "1";
+      toast.style.bottom = "50px";
+    });
 
-      /* ✅ Email Button */
-      document.getElementById("emailBtn").addEventListener("click", () => {
-        const message = encodeURIComponent(buildMessage());
-        const subject = encodeURIComponent(
-          "Enrollment Request - Learn Quran Online"
-        );
+    // hide
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      toast.style.bottom = "30px";
+      setTimeout(() => toast.remove(), 400);
+    }, 3500);
+  }
 
-        if (isMobile()) {
-          window.location.href = `mailto:saleemhafizj@gmail.com?subject=${subject}&body=${message}`;
-        } else {
-          // Open Gmail compose in browser
-          const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=saleemhafizj@gmail.com&su=${subject}&body=${message}`;
-          window.open(gmailUrl, "_blank");
-        }
-      });
+  /* ✅ WhatsApp Button */
+  document.getElementById("whatsappBtn").addEventListener("click", () => {
+    const phone = "61420808755";
+    const message = encodeURIComponent(buildMessage());
 
-      /* ✅ Copy Button */
-      document.getElementById("copyBtn").addEventListener("click", async () => {
-        const text = buildMessage();
-        try {
-          await navigator.clipboard.writeText(text);
-          const btn = document.getElementById("copyBtn");
-          btn.innerText = "Copied!";
-          btn.style.background = "#2ecc71";
-          setTimeout(() => {
-            btn.innerText = "Copy Information";
-            btn.style.background = "var(--gold)";
-          }, 2000);
-        } catch (err) {
-          alert("Could not copy text automatically. Please copy manually.");
-        }
-      });
+    if (isMobile()) {
+      // Mobile → open WhatsApp app directly
+      window.location.href = `https://wa.me/${phone}?text=${message}`;
+    } else {
+      // Desktop → open WhatsApp Desktop app, then WhatsApp Web as fallback
+      const appUrl = `whatsapp://send?phone=${phone}`;
+      const webUrl = `https://web.whatsapp.com/send?phone=${phone}&text=${message}`;
+      window.location.href = appUrl;
 
-      /* Prevent default form submission */
-      enrollForm.addEventListener("submit", (e) => e.preventDefault());
-    </script>
+      // After 1s, open web version with full message
+      setTimeout(() => {
+        window.open(webUrl, "_blank");
+      }, 1200);
+    }
+  });
+
+  /* ✅ Email Button */
+  document.getElementById("emailBtn").addEventListener("click", () => {
+    const message = encodeURIComponent(buildMessage());
+    const subject = encodeURIComponent("Enrollment Request - Learn Quran Online");
+
+    if (isMobile()) {
+      window.location.href = `mailto:saleemhafizj@gmail.com?subject=${subject}&body=${message}`;
+    } else {
+      // Open Gmail compose in browser
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=saleemhafizj@gmail.com&su=${subject}&body=${message}`;
+      window.open(gmailUrl, "_blank");
+    }
+  });
+
+  /* ✅ Copy Button */
+  document.getElementById("copyBtn").addEventListener("click", async () => {
+    const text = buildMessage();
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast("✅ Info copied! Paste it in WhatsApp or Email.");
+      const btn = document.getElementById("copyBtn");
+      btn.innerText = "Copied!";
+      btn.style.background = "#2ecc71";
+      setTimeout(() => {
+        btn.innerText = "Copy Information";
+        btn.style.background = "var(--gold)";
+      }, 2000);
+    } catch (err) {
+      showToast("⚠️ Could not copy automatically. Please copy manually.", "#e74c3c");
+    }
+  });
+
+  /* Prevent default form submission */
+  enrollForm.addEventListener("submit", (e) => e.preventDefault());
+</script>
+
   </body>
 </html>
