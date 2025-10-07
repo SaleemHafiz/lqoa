@@ -737,9 +737,8 @@
 
       /* Header shrink */
       window.addEventListener("scroll", () => {
-        document
-          .querySelector("header")
-          .classList.toggle("scrolled", window.scrollY > 60);
+        const header = document.querySelector("header");
+        header.classList.toggle("scrolled", window.scrollY > 60);
       });
 
       /* Tab switching */
@@ -756,62 +755,71 @@
         });
       });
 
-      /* Mobile menu toggle */
+      /* Mobile menu toggle & close on outside click */
       const menuBtn = document.querySelector(".menu-toggle");
       const nav = document.querySelector("nav");
+
       menuBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         nav.classList.toggle("show");
       });
+
       document.addEventListener("click", (e) => {
-        if (!nav.contains(e.target) && !menuBtn.contains(e.target))
+        if (!nav.contains(e.target) && !menuBtn.contains(e.target)) {
           nav.classList.remove("show");
+        }
       });
 
-      /* Enroll Form Logic */
-      const form = document.getElementById("enrollForm");
-      const whatsappBtn = document.getElementById("whatsappBtn");
-      const emailBtn = document.getElementById("emailBtn");
-
-      function buildMessage() {
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const phone = document.getElementById("phone").value.trim();
-        const country = document.getElementById("country").value;
-        const plan = document.getElementById("plan").value;
-        const msg = document.getElementById("message").value.trim();
-
-        if (!name || !email || !phone || !country || !plan) {
-          alert("Please fill in all required fields before proceeding.");
-          return null;
+      /* Close mobile menu when clicking outside */
+      document.addEventListener("click", (e) => {
+        if (!nav.contains(e.target) && !menuBtn.contains(e.target)) {
+          nav.classList.remove("show");
         }
+      });
 
-        const message = `Salam! I would like to enroll in Learn Quran Online Academy.
+      /* WhatsApp Enroll */
+      const enrollForm = document.getElementById("enrollForm");
+      enrollForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("name").value.trim(),
+          email = document.getElementById("email").value.trim(),
+          phone = document.getElementById("phone").value.trim(),
+          country = document.getElementById("country").value,
+          plan = document.getElementById("plan").value,
+          msg = document.getElementById("message").value.trim();
+
+        const finalMessage =
+          encodeURIComponent(`Salam! I would like to enroll in Learn Quran Online Academy.
 
 👤 Name: ${name}
 📧 Email: ${email}
 📱 WhatsApp: ${phone}
 🌍 Country: ${country}
 📘 Plan: ${plan}
-📝 Message: ${msg || "N/A"}`;
+📝 Message: ${msg || "N/A"}`);
 
-        return encodeURIComponent(message);
-      }
+        const whatsappUrl = `https://wa.me/61420808755?text=${finalMessage}`;
+        const emailUrl = `mailto:saleemhafizj@gmail.com?subject=Enrollment Request - Learn Quran Online&body=${finalMessage}`;
 
-      whatsappBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const text = buildMessage();
-        if (!text) return;
-        const url = `https://wa.me/61420808755?text=${text}`;
-        window.open(url, "_blank");
+        // Ask user which method to use
+        const method = confirm(
+          "Click OK to send via WhatsApp or Cancel to send via Email"
+        );
+        window.open(method ? whatsappUrl : emailUrl, "_blank");
       });
 
-      emailBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const text = buildMessage();
-        if (!text) return;
-        const url = `mailto:saleemhafizj@gmail.com?subject=Enrollment Request - Learn Quran Online&body=${text}`;
-        window.open(url, "_blank");
+      /* Email Enroll */
+      document.getElementById("emailBtn").addEventListener("click", () => {
+        const name = document.getElementById("name").value.trim(),
+          email = document.getElementById("email").value.trim(),
+          phone = document.getElementById("phone").value.trim(),
+          country = document.getElementById("country").value,
+          plan = document.getElementById("plan").value,
+          msg = document.getElementById("message").value.trim();
+        const body = `Salam! I would like to enroll in Learn Quran Online Academy.%0D%0A%0D%0A👤 Name: ${name}%0D%0A📧 Email: ${email}%0D%0A📱 WhatsApp: ${phone}%0D%0A🌍 Country: ${country}%0D%0A📘 Plan: ${plan}%0D%0A📝 Message: ${
+          msg || "N/A"
+        }`;
+        window.location.href = `mailto:saleemhafizj@gmail.com?subject=New Enrollment&body=${body}`;
       });
     </script>
   </body>
