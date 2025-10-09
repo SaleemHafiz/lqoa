@@ -13,7 +13,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+    user-select: none;
+  -webkit-user-select: none; /* For Safari */
+  -ms-user-select: none;     /* For older Edge/IE */
 }
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
