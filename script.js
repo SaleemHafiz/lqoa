@@ -117,10 +117,10 @@ document.getElementById("copyInfoBtn").addEventListener("click", (e) => {
 --------------------------------*/
 async function detectCountryAndSetNumber() {
   const numbers = {
-    default: { num: "92303595459", display: "+92 303 595459" }, // Pakistan (default)
+    default: { num: "92303595459", display: "+92 300 1124825" }, // Pakistan (default)
     AU: { num: "61420808755", display: "+61 420 808 755" }, // Australia (active)
-    GB: { num: "92303595459", display: "+92 303 595459" }, // UK (currently default)
-    AE: { num: "92303595459", display: "+92 303 595459" }, // UAE (currently default)
+    GB: { num: "92303595459", display: "+92 300 1124825" }, // UK (currently default)
+    AE: { num: "92303595459", display: "+92 300 1124825" }, // UAE (currently default)
   };
 
   try {
