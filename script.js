@@ -156,7 +156,9 @@ function applyNumber(info) {
   // Update contact link
   const contactLink = document.getElementById("whatsapp-link");
   if (contactLink) {
-    contactLink.href = `https://wa.me/${info.num}?text=Salam%20I%20want%20to%20learn%20Quran%20Online`;
+    contactLink.href = `https://wa.me/${info.num}?text=${encodeURIComponent(
+  "Assalamualaikum, I saw your ad for Learn Quran Online Academy — can you please tell me more about your Quran classes?"
+)}`;
     contactLink.textContent = info.display;
   }
 
