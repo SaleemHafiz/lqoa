@@ -119,7 +119,7 @@ async function detectCountryAndSetNumber() {
   const numbers = {
     default: { num: "923001124825", display: "+92 300 1124825" }, // Pakistan (default)
     AU: { num: "61420808755", display: "+61 420 808 755" }, // Australia (active)
-    GB: { num: "923001124825", display: "+92 300 1124825" }, // UK (currently default)
+    GB: { num: "923001124825", display: "imran ka number" }, // UK (currently default)
     AE: { num: "923001124825", display: "+92 300 1124825" }, // UAE (currently default)
   };
 
