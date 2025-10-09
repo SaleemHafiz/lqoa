@@ -111,3 +111,54 @@ document.getElementById("copyInfoBtn").addEventListener("click", (e) => {
   navigator.clipboard.writeText(buildMessage())
     .then(() => showToast("Information copied!"));
 });
+
+/* Country-based WhatsApp number */
+async function setWhatsAppNumber() {
+  const phoneNumbers = {
+    AU: { num: "61420808755", display: "+61 420 808 755" },
+    UK: { num: "447400123456", display: "+44 7400 123456" },
+    AE: { num: "971501234567", display: "+971 50 123 4567" },
+    PK: { num: "923001234567", display: "+92 300 1234567" },
+  };
+
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+    const code = data.country_code || "AU";
+    const info = phoneNumbers[code] || phoneNumbers["AU"];
+
+    // Update contact section number
+    const link = document.getElementById("whatsapp-link");
+    link.href = `https://wa.me/${info.num}?text=Salam%20I%20want%20to%20learn%20Quran%20Online`;
+    link.textContent = info.display;
+
+    // Also update enrollment WhatsApp button
+    document
+      .getElementById("whatsappBtn")
+      .addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!validateForm()) return;
+        const message = encodeURIComponent(buildMessage());
+        const desktopUrl = `whatsapp://send?phone=${info.num}&text=${message}`;
+        const webUrl = `https://wa.me/${info.num}?text=${message}`;
+
+        const a = document.createElement("a");
+        a.href = desktopUrl;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        setTimeout(() => {
+          window.open(webUrl, "_blank");
+        }, 800);
+      });
+  } catch (err) {
+    console.error("Location fetch failed:", err);
+    // fallback (Australia)
+    const link = document.getElementById("whatsapp-link");
+    link.href = `https://wa.me/61420808755?text=Salam%20I%20want%20to%20learn%20Quran%20Online`;
+    link.textContent = "+61 420 808 755";
+  }
+}
+
+setWhatsAppNumber();
