@@ -112,53 +112,81 @@ document.getElementById("copyInfoBtn").addEventListener("click", (e) => {
     .then(() => showToast("Information copied!"));
 });
 
-/* Country-based WhatsApp number */
-async function setWhatsAppNumber() {
-  const phoneNumbers = {
-    AU: { num: "61420808755", display: "+61 420 808 755" },
-    UK: { num: "447400123456", display: "+44 7400 123456" },
-    AE: { num: "971501234567", display: "+971 50 123 4567" },
-    PK: { num: "923001234567", display: "+92 300 1234567" },
+/* -------------------------------
+   Detect Country & Set Number
+--------------------------------*/
+async function detectCountryAndSetNumber() {
+  const numbers = {
+    default: { num: "92303595459", display: "+92 303 595459" }, // Pakistan (default)
+    AU: { num: "61420808755", display: "+61 420 808 755" }, // Australia (active)
+    GB: { num: "92303595459", display: "+92 303 595459" }, // UK (currently default)
+    AE: { num: "92303595459", display: "+92 303 595459" }, // UAE (currently default)
   };
 
   try {
+    // Check cached number first
+    const cached = localStorage.getItem("countryNumberInfo");
+    if (cached) {
+      const info = JSON.parse(cached);
+      applyNumber(info);
+      return;
+    }
+
+    // Silent location check
     const res = await fetch("https://ipapi.co/json/");
     const data = await res.json();
-    const code = data.country_code || "AU";
-    const info = phoneNumbers[code] || phoneNumbers["AU"];
+    const code = data.country_code || "default";
+    const info = numbers[code] || numbers.default;
 
-    // Update contact section number
-    const link = document.getElementById("whatsapp-link");
-    link.href = `https://wa.me/${info.num}?text=Salam%20I%20want%20to%20learn%20Quran%20Online`;
-    link.textContent = info.display;
+    // Cache for 24h
+    localStorage.setItem("countryNumberInfo", JSON.stringify(info));
+    setTimeout(() => localStorage.removeItem("countryNumberInfo"), 24 * 60 * 60 * 1000);
 
-    // Also update enrollment WhatsApp button
-    document
-      .getElementById("whatsappBtn")
-      .addEventListener("click", (e) => {
-        e.preventDefault();
-        if (!validateForm()) return;
-        const message = encodeURIComponent(buildMessage());
-        const desktopUrl = `whatsapp://send?phone=${info.num}&text=${message}`;
-        const webUrl = `https://wa.me/${info.num}?text=${message}`;
-
-        const a = document.createElement("a");
-        a.href = desktopUrl;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-
-        setTimeout(() => {
-          window.open(webUrl, "_blank");
-        }, 800);
-      });
+    applyNumber(info);
   } catch (err) {
-    console.error("Location fetch failed:", err);
-    // fallback (Australia)
-    const link = document.getElementById("whatsapp-link");
-    link.href = `https://wa.me/61420808755?text=Salam%20I%20want%20to%20learn%20Quran%20Online`;
-    link.textContent = "+61 420 808 755";
+    console.error("Location check failed:", err);
+    applyNumber(numbers.default);
   }
 }
 
-setWhatsAppNumber();
+/* -------------------------------
+   Apply the Detected Number
+--------------------------------*/
+function applyNumber(info) {
+  // Update contact link
+  const contactLink = document.getElementById("whatsapp-link");
+  if (contactLink) {
+    contactLink.href = `https://wa.me/${info.num}?text=Salam%20I%20want%20to%20learn%20Quran%20Online`;
+    contactLink.textContent = info.display;
+  }
+
+  // Update Enroll Button
+  const whatsappBtn = document.getElementById("whatsappBtn");
+  if (whatsappBtn) {
+    whatsappBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const message = encodeURIComponent(
+        "Salam! I want to enroll for online Quran classes."
+      );
+
+      const desktopUrl = `whatsapp://send?phone=${info.num}&text=${message}`;
+      const webUrl = `https://wa.me/${info.num}?text=${message}`;
+
+      // Try desktop app first
+      const a = document.createElement("a");
+      a.href = desktopUrl;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      // Open web fallback after a short delay
+      setTimeout(() => {
+        window.open(webUrl, "_blank");
+      }, 800);
+    });
+  }
+}
+
+// Run silently
+detectCountryAndSetNumber();
